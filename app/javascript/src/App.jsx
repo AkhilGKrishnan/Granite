@@ -5,6 +5,7 @@ import CreateTask from "components/Tasks/CreateTask";
 import Dashboard from "components/Dashboard";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import ShowTask from "components/Tasks/ShowTask";
+import EditTask from "components/Tasks/EditTask";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/tasks/:slug/show" component={ShowTask} />
+        <Route exact path="/tasks/:slug/edit" component={EditTask} />
         <Route exact path="/tasks/create" component={CreateTask} />
         <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
