@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_06_24_144124) do
     t.text "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "slug"
+    t.string "slug", null: false
     t.index ["slug"], name: "index_tasks_on_slug", unique: true
   end
 
