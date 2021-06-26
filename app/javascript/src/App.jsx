@@ -6,6 +6,7 @@ import Dashboard from "components/Dashboard";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import ShowTask from "components/Tasks/ShowTask";
 import EditTask from "components/Tasks/EditTask";
+import { initializeLogger } from "common/logger";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
