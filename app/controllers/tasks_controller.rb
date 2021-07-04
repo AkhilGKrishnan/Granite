@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user_using_x_auth_token, except: %i[new edit]
   before_action :load_task, only: %i[show update destroy]
   def index
     tasks = Task.all
