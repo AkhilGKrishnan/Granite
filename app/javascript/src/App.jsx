@@ -7,6 +7,7 @@ import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import ShowTask from "components/Tasks/ShowTask";
 import EditTask from "components/Tasks/EditTask";
 import { initializeLogger } from "common/logger";
+import Signup from "components/Authentication/Signup";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ const App = () => {
         <Route exact path="/tasks/:slug/edit" component={EditTask} />
         <Route exact path="/tasks/create" component={CreateTask} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/signup" component={Signup} />
       </Switch>
     </Router>
   );
