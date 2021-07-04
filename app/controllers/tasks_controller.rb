@@ -14,15 +14,13 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
-    if task.save
+    @task = Task.new(task_params.merge(creator_id: @current_user.id))
+    if @task.save
       render status: :ok, json: { notice: t('successfully_created', entity: 'Task') }
     else
-      errors = task.errors.full_messages
+      errors = @task.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { errors: errors }
     end
-  rescue ActiveRecord::RecordNotUnique => e
-    render status: :unprocessable_entity, json: { errors: e.message }
   end
 
   def update
