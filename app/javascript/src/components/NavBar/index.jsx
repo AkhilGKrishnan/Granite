@@ -1,6 +1,8 @@
 import React from "react";
 import NavItem from "./NavItem";
 import { getFromLocalStorage, setToLocalStorage } from "src/helpers/storage";
+import authApi from "apis/auth";
+import { resetAuthTokens } from "apis/axios";
 
 const NavBar = () => {
   const handleLogout = async () => {

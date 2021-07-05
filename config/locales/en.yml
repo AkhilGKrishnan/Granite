@@ -1,4 +1,6 @@
 en:
+  authorization:
+    denied: "Access denied. You are not authorized to perform this action."
   successfully_created: "%{entity} was successfully created!"
   task:
     slug:
