@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
+import tasksApi from "apis/tasks";
+import commentsApi from "apis/comments";
 import Container from "components/Container";
 import PageLoader from "components/PageLoader";
-import tasksApi from "apis/tasks";
+import Comments from "components/Comments";
+import { getFromLocalStorage } from "src/helpers/storage";
 
 const ShowTask = () => {
   const { slug } = useParams();
   const [taskDetails, setTaskDetails] = useState([]);
   const [assignedUser, setAssignedUser] = useState([]);
-  const [taskCreator, setTaskCreator] = useState("");
+  const [comments, setComments] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
+  const [taskCreator, setTaskCreator] = useState("");
+  const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [taskId, setTaskId] = useState("");
+
   let history = useHistory();
 
   const destroyTask = async () => {
@@ -32,9 +38,9 @@ const ShowTask = () => {
   const fetchTaskDetails = async () => {
     try {
       const response = await tasksApi.show(slug);
-      logger.info(response.data);
       setTaskDetails(response.data.task);
       setAssignedUser(response.data.assigned_user);
+      setComments(response.data.comments);
       setTaskCreator(response.data.task_creator);
       setTaskId(response.data.task.id);
     } catch (error) {
@@ -67,33 +73,42 @@ const ShowTask = () => {
   }
 
   return (
-    <>
-      <Container>
-        <div className="flex justify-between text-bb-gray-600 mt-10">
-          <h1 className="pb-3 mt-5 mb-3 text-lg leading-5 font-bold">
-            {taskDetails?.title}
-          </h1>
-          <div className="bg-bb-env px-2 mt-2 mb-4 rounded">
-            <i
-              className="text-2xl text-center transition duration-300
+    <Container>
+      <div className="flex justify-between text-bb-gray-600 mt-10">
+        <h1 className="pb-3 mt-5 mb-3 text-lg leading-5 font-bold">
+          {taskDetails?.title}
+        </h1>
+        <div className="bg-bb-env px-2 mt-2 mb-4 rounded">
+          <i
+            className="text-2xl text-center transition duration-300
+             ease-in-out ri-delete-bin-5-line hover:text-bb-red mr-2"
+            onClick={destroyTask}
+          ></i>
+          <i
+            className="text-2xl text-center transition duration-300
              ease-in-out ri-edit-line hover:text-bb-yellow"
-              onClick={updateTask}
-            ></i>
-          </div>
+            onClick={updateTask}
+          ></i>
         </div>
-        <h2
-          className="pb-3 mb-3 text-md leading-5 text-bb-gray-600
+      </div>
+      <h2
+        className="pb-3 mb-3 text-md leading-5 text-bb-gray-600
        text-opacity-50"
-        >
-          <span>Assigned To : </span>
-          {assignedUser?.name}
-        </h2>
-        <h2 className="pb-3 mb-3 text-md leading-5 text-bb-gray-600 text-opacity-50">
-          <span>Created By : </span>
-          {taskCreator}
-        </h2>
-      </Container>
-    </>
+      >
+        <span>Assigned To : </span>
+        {assignedUser?.name}
+      </h2>
+      <h2 className="pb-3 mb-3 text-md leading-5 text-bb-gray-600 text-opacity-50">
+        <span>Created By : </span>
+        {taskCreator}
+      </h2>
+      <Comments
+        comments={comments}
+        setNewComment={setNewComment}
+        handleSubmit={handleSubmit}
+        loading={loading}
+      />
+    </Container>
   );
 };
 
