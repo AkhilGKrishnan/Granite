@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :slug, uniqueness: true
+  enum progress: { pending: 0, completed: 1 }
   validate :slug_not_changed
   before_create :set_slug
   belongs_to :user
