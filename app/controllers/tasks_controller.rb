@@ -2,14 +2,13 @@ class TasksController < ApplicationController
   before_action :authenticate_user_using_x_auth_token
   before_action :load_task, only: %i[show update destroy]
 
-
   def index
     tasks = policy_scope(Task)
     render status: :ok, json: {
       tasks: {
         pending: tasks.organize(:pending).as_json(
           include: { user: { only: %i[name id] } }
-        }),
+        ),
         completed: tasks.organize(:completed)
       }
     }
