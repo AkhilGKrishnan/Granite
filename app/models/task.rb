@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :slug, uniqueness: true
   enum progress: { pending: 0, completed: 1 }
+  enum status: { unstarred: 0, starred: 1 }
   validate :slug_not_changed
   before_create :set_slug
   belongs_to :user
@@ -22,5 +25,11 @@ class Task < ApplicationRecord
 
   def slug_not_changed
     errors.add(:slug, t('task.slug.immutable')) if slug_changed? && persisted?
+  end
+
+  def self.organize(progress)
+    starred = send(progress).starred.order('updated_at DESC')
+    unstarred = send(progress).unstarred
+    starred + unstarred
   end
 end

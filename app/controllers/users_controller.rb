@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   # before_action :authenticate_user_using_x_auth_token, only: [:index]
 

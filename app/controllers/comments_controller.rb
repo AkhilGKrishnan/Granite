@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   before_action :load_task
   before_action :authenticate_user_using_x_auth_token

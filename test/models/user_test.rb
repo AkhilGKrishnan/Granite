@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
@@ -39,7 +41,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_reject_email_of_invalid_length
-    @user.email = ('a' * 50) + '@test.com'
+    @user.email = "#{'a' * 50}@test.com"
     assert @user.invalid?
   end
 
