@@ -13,6 +13,7 @@ import Signup from "components/Authentication/Signup";
 import PrivateRoute from "components/Common/PrivateRoute";
 import PageLoader from "components/PageLoader";
 import { getFromLocalStorage } from "src/helpers/storage.js";
+import MyPreferences from "components/MyPreferences";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -46,6 +47,7 @@ const App = () => {
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/my/preferences" component={MyPreferences} />
         <PrivateRoute
           path="/"
           redirectRoute="/login"
