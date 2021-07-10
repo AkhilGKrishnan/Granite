@@ -1,23 +1,21 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(name: 'Sam Smith',
-                     email: 'sam@example.com',
-                     password: 'welcome',
-                     password_confirmation: 'welcome')
+    @user = User.create(name: 'Sam Smith',
+                        email: 'sam@example.com',
+                        password: 'welcome',
+                        password_confirmation: 'welcome')
   end
 
-  def test_user_should_be_not_be_valid_without_name
+  def test_name_should_be_invalid_without_content
     @user.name = ''
-    assert_not @user.valid?
+    assert @user.invalid?
     assert_equal ["Name can't be blank"], @user.errors.full_messages
   end
 
-  def test_name_should_be_of_valid_length
-    @user.name = 'a' * 50
+  def test_name_should_not_exceed_maximum_length
+    @user.name = 'a' * 31
     assert @user.invalid?
   end
 
@@ -41,7 +39,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_reject_email_of_invalid_length
-    @user.email = "#{'a' * 50}@test.com"
+    @user.email = ('a' * 50) + '@test.com'
     assert @user.invalid?
   end
 
@@ -72,10 +70,10 @@ class UserTest < ActiveSupport::TestCase
                  @user.errors.full_messages
   end
 
-  def test_user_should_not_be_saved_without_password_confirmation
-    @user.password_confirmation = nil
+  def test_user_should_match_password_and_password_confirmation
+    @user.password_confirmation = ''
     assert_not @user.save
-    assert_equal ["Password confirmation can't be blank"],
+    assert_equal ["Password confirmation doesn't match Password"],
                  @user.errors.full_messages
   end
 
@@ -87,6 +85,4 @@ class UserTest < ActiveSupport::TestCase
     assert_not_same @user.authentication_token,
                     second_user.authentication_token
   end
-
-  # embed new test cases here...
 end
