@@ -1,2 +1,2 @@
 # Granite
-![CircleCI](https://img.shields.io/circleci/build/github/akhilgkrishnan/granite/main)
+![CircleCI](https://img.shields.io/circleci/build/github/AkhilGKrishnan/Granite/main)
